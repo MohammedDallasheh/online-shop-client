@@ -20,7 +20,7 @@ import { landingModal } from "./function/model";
 const App = () => {
   useEffect(() => {
     initialSetup();
-    // landingModal();
+    landingModal();
   }, []);
 
   return (
