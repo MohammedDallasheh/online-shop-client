@@ -1,0 +1,39 @@
+.carousel-indicators {
+  padding-top: 1.5rem;
+  height: 1rem;
+  display: flex;
+  align-items: flex-end;
+}
+.carousel-indicators li {
+  height: 0.4rem;
+  width: 5rem;
+  cursor: pointer;
+  transition: all 1s;
+}
+.carousel-indicators li.active {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.carousel-indicators:hover li {
+  height: 1rem;
+  transition: all 1s;
+}
+.carousel-caption {
+  border-radius: 2rem;
+  top: 10%;
+  bottom: unset;
+  color: white;
+  cursor: pointer;
+}
+.carousel-caption * {
+  color: white;
+}
+.carousel-indicators li,
+.carousel-caption,
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  transform: scale(2, 4);
+}

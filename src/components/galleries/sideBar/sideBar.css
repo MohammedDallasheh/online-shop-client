@@ -1,0 +1,56 @@
+.my-sider-container {
+  display: flex;
+  flex-direction: column;
+  padding: 4rem 0 8rem 0;
+}
+.my-sider-wrapper {
+  position: sticky;
+  height: 80vh;
+  top: 10vh;
+  z-index: 50;
+}
+
+/* .ant-layout-sider .my-sider {
+  width: 25vw;
+  max-width: 25vw;
+  min-width: 25vw;
+} */
+
+.my-sider {
+  height: 100%;
+  /* width: 100%; */
+}
+.my-sider.break {
+  position: absolute;
+}
+
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.filter-row {
+  width: 100%;
+  font-size: 1rem;
+  text-transform: capitalize;
+  padding: 0.25rem;
+  color: rgba(0, 0, 0, 0.75);
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+}
+.filter-row:hover {
+  color: #1890ff;
+  background-color: #e6f7ff8c;
+}
+.filter-row:not(:last-child) {
+  margin-bottom: 8px;
+}
+.filter-row-active {
+  background-color: #e6f7ff;
+  border-right: 3px solid #1890ff;
+}
+
+.sidebar-collapse-active > :first-child {
+  color: #1890ff !important;
+  background-color: 'red';
+}

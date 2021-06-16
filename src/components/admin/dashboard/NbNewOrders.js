@@ -1,0 +1,20 @@
+import * as React from 'react';
+import { FC } from 'react';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import { useTranslate } from 'react-admin';
+
+import CardWithIcon from './CardWithIcon';
+
+const NbNewOrders = ({ value }) => {
+  const translate = useTranslate();
+  return (
+    <CardWithIcon
+      to="/orders"
+      icon={ShoppingCartIcon}
+      title={translate('pos.dashboard.new_orders')}
+      subtitle={value}
+    />
+  );
+};
+
+export default NbNewOrders;
