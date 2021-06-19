@@ -1,42 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { Steps, Button, Tooltip } from 'antd';
-import { Link } from 'react-router-dom';
+import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { Steps, Button, Tooltip } from "antd";
+import { Link } from "react-router-dom";
 
-import Payment from './Payment';
-import OrderDetails from './OrderDetails';
-import OrderProducts from './OrderProducts';
-import DelayRedirect from '../routing/DelayRedirect';
-import { calcTotalPriceOffer } from '../cart/cartFunction';
-import { updateOrder } from '../../actions/user/index';
+import Payment from "./Payment";
+import OrderDetails from "./OrderDetails";
+import OrderProducts from "./OrderProducts";
+import DelayRedirect from "../routing/DelayRedirect";
+import { calcTotalPriceOffer } from "../cart/cartFunction";
+import { updateOrder } from "../../actions/user/index";
 
 const { Step } = Steps;
 
 const initialCreditState = {
-  paymentMethod: 'Credit Card',
-  'cc-name': '1',
-  'cc-number': '2',
-  'cc-expiration': '3',
-  'cc-cvv': '4',
-  totalAmount: '',
+  paymentMethod: "Credit Card",
+  "cc-name": "1",
+  "cc-number": "2",
+  "cc-expiration": "3",
+  "cc-cvv": "4",
+  totalAmount: "",
 };
 const initialFormState = {
-  fName: '',
-  lName: '',
-  email: '',
-  address: '',
-  paymentType: '',
-  totalAmount: '',
+  fName: "",
+  lName: "",
+  email: "",
+  address: "",
+  paymentType: "",
+  totalAmount: "",
 };
-const stateSelector = (sellerId) => ({ auth }) => {
-  const cart = auth.user.cart.filter(({ user }) => user == sellerId);
-  return {
-    ...auth.user,
-    cart,
+const stateSelector =
+  (sellerId) =>
+  ({ auth }) => {
+    const cart = auth.user.cart.filter(({ user }) => user == sellerId);
+    return {
+      ...auth.user,
+      cart,
+    };
   };
-};
 
 const CheckOut = ({ history }) => {
   const { sellerId } = useParams();
@@ -80,31 +82,22 @@ const CheckOut = ({ history }) => {
       payment: creditForm,
       address: form.address,
     };
-    if (await dispatch(updateOrder(order)))
-      history.push('/user-mangment#/orders');
+    if (await dispatch(updateOrder(order))) history.push("/user-mangment#");
   };
   const steps = [
     {
-      title: 'Details',
+      title: "Details",
       content: <OrderDetails form={form} setForm={setForm} />,
     },
     {
-      title: 'Products',
+      title: "Products",
       content: (
-        <OrderProducts
-          cart={user.cart}
-          totalPrice={creditForm.totalAmount}
-        />
+        <OrderProducts cart={user.cart} totalPrice={creditForm.totalAmount} />
       ),
     },
     {
-      title: 'Payment',
-      content: (
-        <Payment
-          creditForm={creditForm}
-          handleCredit={handleCredit}
-        />
-      ),
+      title: "Payment",
+      content: <Payment creditForm={creditForm} handleCredit={handleCredit} />,
     },
   ];
 
@@ -132,18 +125,13 @@ const CheckOut = ({ history }) => {
 
         <div className="steps-action ">
           {currentTab > 0 && (
-            <Button
-              style={{ margin: '0 8px' }}
-              onClick={() => nextPrv(-1)}
-            >
+            <Button style={{ margin: "0 8px" }} onClick={() => nextPrv(-1)}>
               Previous
             </Button>
           )}
           {currentTab < steps.length - 1 && (
             <Tooltip
-              title={
-                (currentTab == 1) & outOfStoke ? 'OUT OF STOCK' : ''
-              }
+              title={(currentTab == 1) & outOfStoke ? "OUT OF STOCK" : ""}
             >
               <Button
                 type="primary"

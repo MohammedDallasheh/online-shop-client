@@ -1,24 +1,24 @@
-import React, { useEffect } from 'react';
-import './header.css';
+import React, { useEffect } from "react";
+import "./header.css";
 
-import { Link, useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { Menu, Popover, Avatar } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { Link, useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { Menu, Popover, Avatar } from "antd";
+import { DownOutlined } from "@ant-design/icons";
 
-import SignTabsCard from '../cards/SignTabsCard';
-import NavUserMEnu from '../cards/NavUserMenu';
-import CartPopup from '../cards/CartPopup';
-import Icon from '../layout/Icon';
-import NavSearch from './Search';
-import { getProductsFilter } from '../../actions/product/index';
+import SignTabsCard from "../cards/SignTabsCard";
+import NavUserMEnu from "../cards/NavUserMenu";
+import CartPopup from "../cards/CartPopup";
+import Icon from "../layout/Icon";
+import NavSearch from "./Search";
+import { getProductsFilter } from "../../actions/product/index";
 const { SubMenu } = Menu;
 
 const stateSelector = ({ auth, products }) => ({
   user: auth.user,
   isAuth: auth.isAuth,
   filters: products.productsFilters?.filter((f) =>
-    ['Tags', 'Category', 'Subs'].includes(f.name)
+    ["Tags", "Category", "Subs"].includes(f.name)
   ),
 });
 
@@ -33,9 +33,11 @@ const Header = () => {
 
   const popupData = isAuth
     ? {
-        title: <span>Hello {user?.name?.first || ''}</span>,
+        title: <span>Hello {user?.name?.first || ""}</span>,
         content: <NavUserMEnu />,
-        icon: <Avatar src={user?.avatar?.url} />,
+        icon: (
+          <Avatar src={process.env.REACT_APP_API_SERVER + user?.avatar?.url} />
+        ),
       }
     : {
         title: <Link to="/sign">Hello..</Link>,
@@ -68,9 +70,7 @@ const Header = () => {
             title={<Link to={`/products`}>{name}</Link>}
           >
             {items?.map((item) => (
-              <Menu.Item
-                key={`submenu-Products-${item?._id || item}`}
-              >
+              <Menu.Item key={`submenu-Products-${item?._id || item}`}>
                 <Link to={`/products?${value}=${item?._id || item}`}>
                   {item?.name || item}
                 </Link>
@@ -100,10 +100,7 @@ const Header = () => {
           <CartPopup />
         </Menu.Item>
       )}
-      <Menu.Item
-        key="user"
-        className="float-right border-bottom-0 order-last"
-      >
+      <Menu.Item key="user" className="float-right border-bottom-0 order-last">
         <Popover
           placement="bottomRight"
           title={popupData.title}
@@ -111,7 +108,7 @@ const Header = () => {
           trigger="click"
           destroyTooltipOnHide={true}
         >
-          <div style={{ width: '100%' }}>{popupData.icon}</div>
+          <div style={{ width: "100%" }}>{popupData.icon}</div>
         </Popover>
       </Menu.Item>
     </Menu>

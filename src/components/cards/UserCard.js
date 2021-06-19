@@ -7,7 +7,6 @@ import { imageFallback } from "../../utils/imageFallback";
 
 const UserCard = ({ items = {} }) => {
   const { _id, name, avatar, description, email } = items;
-
   return (
     // <Link to={`/users/${_id}/products`}>
     <Link to={`/products?user=${_id}`}>
@@ -15,7 +14,7 @@ const UserCard = ({ items = {} }) => {
         <Image
           className="card-img-top"
           alt={avatar?.alt}
-          src={avatar?.url}
+          src={process.env.REACT_APP_API_SERVER + avatar?.url}
           width="100%"
           height="15rem"
           fallback={imageFallback}

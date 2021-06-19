@@ -61,7 +61,6 @@ const AdminPage = ({ history: homeHistory }) => {
       })
     );
 
-    console.log({ history, homeHistory });
     return () => {
       dispatch(changeLocation());
     };

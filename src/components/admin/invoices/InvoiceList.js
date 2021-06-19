@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import {
   List,
   Datagrid,
@@ -8,13 +8,13 @@ import {
   NumberField,
   Filter,
   DateInput,
-} from 'react-admin';
+} from "react-admin";
 
-import { parse } from 'query-string';
-import { useDispatch } from 'react-redux';
-import { expandInvoices } from '../configuration/actions';
-import FullNameField from '../visitors/FullNameField';
-import InvoiceShow from './InvoiceShow';
+import { parse } from "query-string";
+import { useDispatch } from "react-redux";
+import { expandInvoices } from "../configuration/actions";
+import FullNameField from "../visitors/FullNameField";
+import InvoiceShow from "./InvoiceShow";
 
 const ListFilters = (props) => (
   <Filter {...props}>
@@ -28,12 +28,11 @@ const InvoiceList = (props) => {
 
   useEffect(() => {
     const { id } = parse(props.location.search, {
-      arrayFormat: 'comma',
+      arrayFormat: "comma",
     });
     if (!id) return;
-    if (typeof id === 'string') return dispatch(expandInvoices(id));
-    if (Array.isArray(id))
-      id.forEach((id) => dispatch(expandInvoices(id)));
+    if (typeof id === "string") return dispatch(expandInvoices(id));
+    if (Array.isArray(id)) id.forEach((id) => dispatch(expandInvoices(id)));
   }, []);
 
   return (
@@ -42,7 +41,7 @@ const InvoiceList = (props) => {
       resource="orders"
       filters={<ListFilters />}
       perPage={25}
-      sort={{ field: 'updatedAt', order: 'ASC' }}
+      sort={{ field: "updatedAt", order: "DESC" }}
       bulkActionButtons={false}
     >
       <Datagrid rowClick="expand" expand={<InvoiceShow />}>
@@ -54,10 +53,7 @@ const InvoiceList = (props) => {
         <ReferenceField source="sellerId" reference="customers">
           <FullNameField />
         </ReferenceField>
-        <TextField
-          source="address"
-          label="resources.invoices.fields.address"
-        />
+        <TextField source="address" label="resources.invoices.fields.address" />
         {/* <NumberField source="total_ex_taxes" />
         <NumberField source="delivery_fees" />
       <NumberField source="taxes" /> */}

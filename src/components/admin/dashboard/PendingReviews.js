@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { FC } from 'react';
+import * as React from "react";
+import { FC } from "react";
 import {
   Avatar,
   Box,
@@ -8,14 +8,14 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import CommentIcon from '@material-ui/icons/Comment';
-import { Link } from 'react-router-dom';
-import { useTranslate } from 'react-admin';
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import CommentIcon from "@material-ui/icons/Comment";
+import { Link } from "react-router-dom";
+import { useTranslate } from "react-admin";
 
-import CardWithIcon from './CardWithIcon';
-import StarRatingField from '../reviews/StarRatingField';
+import CardWithIcon from "./CardWithIcon";
+import StarRatingField from "../reviews/StarRatingField";
 
 const PendingReviews = ({ reviews = [], customers = {}, nb }) => {
   const classes = useStyles();
@@ -24,7 +24,7 @@ const PendingReviews = ({ reviews = [], customers = {}, nb }) => {
     <CardWithIcon
       to="/reviews"
       icon={CommentIcon}
-      title={translate('pos.dashboard.pending_reviews')}
+      title={translate("pos.dashboard.pending_reviews")}
       subtitle={nb}
     >
       <List>
@@ -40,6 +40,7 @@ const PendingReviews = ({ reviews = [], customers = {}, nb }) => {
               {customers[record.customer_id] ? (
                 <Avatar
                   src={`${
+                    process.env.REACT_APP_API_SERVER +
                     customers[record.customer_id].avatar
                   }?size=32x32`}
                   className={classes.avatar}
@@ -67,7 +68,7 @@ const PendingReviews = ({ reviews = [], customers = {}, nb }) => {
         color="primary"
       >
         <Box p={1} className={classes.linkContent}>
-          {translate('pos.dashboard.all_reviews')}
+          {translate("pos.dashboard.all_reviews")}
         </Box>
       </Button>
     </CardWithIcon>
@@ -79,11 +80,11 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.background.paper,
   },
   listItemText: {
-    overflowY: 'hidden',
-    height: '4em',
-    display: '-webkit-box',
+    overflowY: "hidden",
+    height: "4em",
+    display: "-webkit-box",
     WebkitLineClamp: 2,
-    WebkitBoxOrient: 'vertical',
+    WebkitBoxOrient: "vertical",
   },
   link: {
     borderRadius: 0,

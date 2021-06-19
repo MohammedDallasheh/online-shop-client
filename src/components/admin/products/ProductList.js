@@ -1,6 +1,6 @@
-import React from 'react';
-import { Box, Chip, useMediaQuery } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { Box, Chip, useMediaQuery } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   CreateButton,
   ExportButton,
@@ -11,10 +11,10 @@ import {
   useListContext,
   useTranslate,
   useAuthProvider,
-} from 'react-admin';
-import { useSelector } from 'react-redux';
-import GridList from './GridList';
-import Aside from './Aside';
+} from "react-admin";
+import { useSelector } from "react-redux";
+import GridList from "./GridList";
+import Aside from "./Aside";
 
 const useQuickFilterStyles = makeStyles((theme) => ({
   root: {
@@ -30,24 +30,21 @@ const QuickFilter = ({ label }) => {
 
 const ListActions = ({ isSmall }) => (
   <TopToolbar>
-    <SortButton fields={['price', 'rate', 'offer']} />
+    <SortButton fields={["price", "rate", "offer"]} />
     <CreateButton basePath="/products" />
     <ExportButton />
   </TopToolbar>
 );
 
 const ProductList = (props) => {
-  const isSmall = useMediaQuery((theme) =>
-    theme.breakpoints.down('sm')
-  );
+  const isSmall = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const { getIdentity } = useAuthProvider();
   const { role, _id: userId } = useSelector(({ auth }) => auth?.user);
 
-  console.log(props);
   return (
     <ListBase
       perPage={20}
-      sort={{ field: 'reference', order: 'ASC' }}
+      sort={{ field: "reference", order: "ASC" }}
       {...props}
       // filterDefaultValues={{
       //   user: role != 'admin' ? userId : undefined,
@@ -66,7 +63,7 @@ const ProductListView = ({ isSmall }) => {
       <ListActions isSmall={isSmall} />
       <Box display="flex">
         <Aside />
-        <Box width={isSmall ? 'auto' : 'calc(100% - 16em)'}>
+        <Box width={isSmall ? "auto" : "calc(100% - 16em)"}>
           <GridList />
           <Pagination rowsPerPageOptions={[10, 20, 40]} />
         </Box>

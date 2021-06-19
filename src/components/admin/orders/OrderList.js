@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { Fragment, useCallback, useEffect, useState } from 'react';
+import * as React from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import {
   Datagrid,
   DateField,
@@ -14,30 +14,30 @@ import {
   useGetList,
   useNotify,
   useQuery,
-} from 'react-admin';
-import { useSelector } from 'react-redux';
-import { useMediaQuery, Divider, Tabs, Tab } from '@material-ui/core';
+} from "react-admin";
+import { useSelector } from "react-redux";
+import { useMediaQuery, Divider, Tabs, Tab } from "@material-ui/core";
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 
-import NbItemsField from './NbItemsField';
-import CustomerReferenceField from '../visitors/CustomerReferenceField';
-import AddressField from '../visitors/AddressField';
-import MobileGrid from './MobileGrid';
-import OrderFilter from './OrderFilter';
-import axios from 'axios';
+import NbItemsField from "./NbItemsField";
+import CustomerReferenceField from "../visitors/CustomerReferenceField";
+import AddressField from "../visitors/AddressField";
+import MobileGrid from "./MobileGrid";
+import OrderFilter from "./OrderFilter";
+import axios from "axios";
 
 const useDatagridStyles = makeStyles({
-  total: { fontWeight: 'bold' },
+  total: { fontWeight: "bold" },
 });
 
 const statusTypes = [
-  'Not Processed',
-  'Processing',
-  'Shippeng',
-  'Arrive',
-  'Completed',
-  'Cancelled',
+  "Not Processed",
+  "Processing",
+  "Shippeng",
+  "Arrive",
+  "Completed",
+  "Cancelled",
 ];
 export const tabs = statusTypes.map((status) => ({
   id: status,
@@ -46,14 +46,14 @@ export const tabs = statusTypes.map((status) => ({
 
 const useGetTotals = (enabled) => {
   const { data } = useQuery({
-    type: 'fetchData',
-    resource: 'orders',
-    payload: 'info/statuses',
+    type: "fetchData",
+    resource: "orders",
+    payload: "info/statuses",
   });
   if (data)
     statusTypes.forEach((status) => {
       // console.log(data, status);
-      if (!data[status]) data[status] = '0';
+      if (!data[status]) data[status] = "0";
     });
   return { ...data };
 };
@@ -62,18 +62,11 @@ const TabbedDatagrid = (props) => {
   const role = useSelector(({ auth }) => auth?.user?.role);
 
   const listContext = useListContext();
-  const {
-    ids,
-    filterValues,
-    setFilters,
-    displayedFilters,
-  } = listContext;
+  const { ids, filterValues, setFilters, displayedFilters } = listContext;
 
   const classes = useDatagridStyles();
   const dataProvider = useDataProvider();
-  const isXSmall = useMediaQuery((theme) =>
-    theme.breakpoints.down('xs')
-  );
+  const isXSmall = useMediaQuery((theme) => theme.breakpoints.down("xs"));
 
   // const [totals, setTotals] = useState({});
   // useGetTotals().then((data) => setTotals(data));
@@ -82,7 +75,7 @@ const TabbedDatagrid = (props) => {
   // console.log(`totals`, totals);
 
   const [idsState, setIdsState] = useState({
-    selected: '',
+    selected: "",
   });
 
   useEffect(() => {
@@ -107,11 +100,11 @@ const TabbedDatagrid = (props) => {
 
   const handleChange = useCallback(
     (event, value) => {
-      if (value === idsState.selected) value = '';
+      if (value === idsState.selected) value = "";
       setIdsState((state) => ({ ...state, selected: value }));
       setFilters &&
         setFilters(
-          { ...filterValues, 'status.statusType': value },
+          { ...filterValues, "status.statusType": value },
           displayedFilters
         );
     },
@@ -129,17 +122,15 @@ const TabbedDatagrid = (props) => {
       >
         {tabs.map(({ id, name }, i) => (
           <Tab
-            key={id + '-' + i}
-            label={`${name} (${totals[name] || '...'})`}
+            key={id + "-" + i}
+            label={`${name} (${totals[name] || "..."})`}
             value={id}
           />
         ))}
       </Tabs>
       <Divider />
       {isXSmall ? (
-        <ListContextProvider
-          value={{ ...listContext, ids: idsState.selected }}
-        >
+        <ListContextProvider value={{ ...listContext, ids: idsState.selected }}>
           <MobileGrid {...props} ids={ids} />
         </ListContextProvider>
       ) : (
@@ -149,20 +140,17 @@ const TabbedDatagrid = (props) => {
               ...listContext,
             }}
           >
-            <Datagrid
-              {...props}
-              rowClick={role !== 'subscriber' ? 'edit' : ''}
-            >
+            <Datagrid {...props} rowClick={role !== "subscriber" ? "edit" : ""}>
               <DateField source="createdAt" showTime />
               <DateField source="updatedAt" showTime />
               {/* <TextField source="reference" /> */}
               <CustomerReferenceField
                 source="buyerId"
-                link={role === 'admin'}
+                link={role === "admin"}
               />
               <CustomerReferenceField
                 source="sellerId"
-                link={role === 'admin'}
+                link={role === "admin"}
               />
               {/* <ReferenceField
                 source="buyerId"
@@ -182,8 +170,8 @@ const TabbedDatagrid = (props) => {
                 source="payment.amount"
                 label="resources.orders.fields.amount"
                 options={{
-                  style: 'currency',
-                  currency: 'USD',
+                  style: "currency",
+                  currency: "USD",
                 }}
                 className={classes.total}
               />
@@ -202,7 +190,7 @@ const TabbedDatagrid = (props) => {
 const OrderList = (props) => (
   <List
     {...props}
-    sort={{ field: 'createdAt', order: 'ASC' }}
+    sort={{ field: "updatedAt", order: "DESC" }}
     perPage={25}
     filters={<OrderFilter />}
     bulkActionButtons={false}

@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import { Tag, Input, Tooltip, Button, Select } from 'antd';
-import { useHistory, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { parse } from 'query-string';
+import { Tag, Input, Tooltip, Button, Select } from "antd";
+import { useHistory, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { parse } from "query-string";
 
-import { PlusOutlined } from '@ant-design/icons';
-import Search from '../../header/Search';
-import { sendMessage } from '../../../actions/user/index';
+import { PlusOutlined } from "@ant-design/icons";
+import Search from "../../header/Search";
+import { sendMessage } from "../../../actions/user/index";
 
 const messageTypeOptions = [
-  { value: 'general', label: 'General' },
-  { value: 'report', label: 'Report' },
-  { value: 'afterOrder', label: 'After Order' },
-  { value: 'beforeOrder', label: 'Before Order' },
+  { value: "general", label: "General" },
+  { value: "report", label: "Report" },
+  { value: "afterOrder", label: "After Order" },
+  { value: "beforeOrder", label: "Before Order" },
 ];
 
 const NewMessage = () => {
@@ -22,16 +22,12 @@ const NewMessage = () => {
   const { search } = useLocation();
 
   const [tags, setTags] = useState({});
-  const [subject, setSubject] = useState('');
-  const [body, setBody] = useState('');
-  const [messageType, setMessageType] = useState(
-    messageTypeOptions[0]?.value
-  );
+  const [subject, setSubject] = useState("");
+  const [body, setBody] = useState("");
+  const [messageType, setMessageType] = useState(messageTypeOptions[0]?.value);
 
   useEffect(() => {
     handleReset();
-    console.log({ search });
-    console.log(parse(search));
     const { email, to, subject, body, type } = parse(search);
     if (email && to) setTags({ [email]: to });
     if (subject) setSubject(subject);
@@ -52,9 +48,9 @@ const NewMessage = () => {
 
   const handleReset = async () => {
     setTags({});
-    setSubject('');
-    setBody('');
-    setMessageType('general');
+    setSubject("");
+    setBody("");
+    setMessageType("general");
   };
 
   const handleSend = async () => {
@@ -67,7 +63,7 @@ const NewMessage = () => {
       })
     );
     if (!isSuccess) return;
-    history.push('sent');
+    history.push("sent");
     handleReset();
   };
   return (
@@ -86,11 +82,7 @@ const NewMessage = () => {
         </div>
         <div className="col">
           {Object.entries(tags)?.map(([key, value]) => (
-            <Tag
-              key={key}
-              closable
-              onClose={(e) => handleTagClose(e, key)}
-            >
+            <Tag key={key} closable onClose={(e) => handleTagClose(e, key)}>
               {key}
             </Tag>
           ))}
@@ -131,7 +123,7 @@ const NewMessage = () => {
         style={{
           right: 0,
           button: 0,
-          transform: 'translate(-20px,calc( -100% - 20px) )',
+          transform: "translate(-20px,calc( -100% - 20px) )",
         }}
       >
         <Button type="primary" shape="round" onClick={handleReset}>

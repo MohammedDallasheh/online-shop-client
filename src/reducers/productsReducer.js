@@ -27,7 +27,10 @@ export default function (state = initialState, action) {
     case UPDATE_REVIEWS:
       return {
         ...state,
-        product: { ...state.product, reviews: payload.reviews },
+        product: {
+          ...state.product,
+          reviews: payload.reviews,
+        },
       };
 
     case GET_PRODUCTS_FILTER:

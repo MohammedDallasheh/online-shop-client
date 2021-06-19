@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-const isStr = (str) => typeof str === 'string';
+const isStr = (str) => typeof str === "string";
 
 export const useFetch = (props = {}) => {
   if (isStr(props)) {
@@ -12,22 +12,20 @@ export const useFetch = (props = {}) => {
 
   const [status, setStatus] = useState(true);
   const [data, setData] = useState(newData(defaultData));
-  const [method, setMethodState] = useState('get');
+  const [method, setMethodState] = useState("get");
   const [req, setReq] = useState([defaultUrl, undefined, undefined]);
 
   const setUrl = (url) =>
     isStr(url) && setReq((oldReq) => [url, oldReq[1], oldReq[2]]);
 
   const setBody = (body) =>
-    body &&
-    setReq((oldReq) => [oldReq[0], JSON.stringify(body), oldReq[2]]);
+    body && setReq((oldReq) => [oldReq[0], JSON.stringify(body), oldReq[2]]);
   const setConfig = (config) =>
     config && setReq((oldReq) => [oldReq[0], oldReq[1], config]);
 
   const setMethod = (method) => {
-    if (['post', 'put'].includes(method))
-      return setMethodState(method);
-    if (['get', 'delete'].includes(method)) {
+    if (["post", "put"].includes(method)) return setMethodState(method);
+    if (["get", "delete"].includes(method)) {
       setMethodState(method);
       setReq(([url]) => [url]);
     }
@@ -45,7 +43,6 @@ export const useFetch = (props = {}) => {
 
   useEffect(() => {
     if (!isStr(req[0])) return;
-    // console.log(req, method);
     setData(newData(defaultData));
     (async () => {
       try {

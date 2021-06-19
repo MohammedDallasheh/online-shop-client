@@ -22,12 +22,11 @@ const CommentFeild = (props) => {
   const { productId, commentId, commentText, datetime } = props;
   const defaultAvatar =
     "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png";
-
   return (
     <Comment
       datetime={datetime}
       author={author}
-      avatar={avatar?.url || defaultAvatar}
+      avatar={process.env.REACT_APP_API_SERVER + avatar?.url || defaultAvatar}
       content={
         <div key={commentId}>
           {typeof order?.rate == "number" && (
@@ -62,10 +61,11 @@ const CommentList = ({ comments }) => (
     itemLayout="horizontal"
     renderItem={(props) => <CommentFeild {...props} />}
     pagination={{
+      className: "text-center",
       onChange: () =>
         scroller.scrollTo("product-review-section", {
-          duration: 1000,
-          delay: 50,
+          duration: 200,
+          delay: 10,
           smooth: true,
         }),
     }}
@@ -141,9 +141,14 @@ const ProductReview = ({ product, user }) => {
     <>
       <Element name="product-review-section" />
       {comments?.length > 0 && <CommentList comments={comments} />}
-      {hasEditorPermission() && (
+      {hasEditorPermission() ? (
         <Comment
-          avatar={<Avatar src={user?.avatar?.url} alt={user?.avatar?.alt} />}
+          avatar={
+            <Avatar
+              src={process.env.REACT_APP_API_SERVER + user?.avatar?.url}
+              alt={user?.avatar?.alt}
+            />
+          }
           content={
             <Editor
               onChange={handleChange}
@@ -153,6 +158,8 @@ const ProductReview = ({ product, user }) => {
             />
           }
         />
+      ) : (
+        <div className="py-4" />
       )}
     </>
   );

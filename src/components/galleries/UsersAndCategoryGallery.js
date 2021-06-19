@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { parse } from 'query-string';
+import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { parse } from "query-string";
 
-import { useFetch } from '../../function/useFetch';
+import { useFetch } from "../../function/useFetch";
 
-import Gallery from '../galleries/Gallery';
-import UserCard from '../cards/UserCard';
-import CategoryCard from '../cards/CategoryCard';
+import Gallery from "../galleries/Gallery";
+import UserCard from "../cards/UserCard";
+import CategoryCard from "../cards/CategoryCard";
 
 const UsersAndCategoryGallery = () => {
   const { status, data, setFetch } = useFetch();
@@ -18,18 +18,13 @@ const UsersAndCategoryGallery = () => {
     const [from, to] = [(page - 1) * limit, page * limit - 1];
 
     const userFilter =
-      location.pathname == '/users'
-        ? 'filter={"role":"seller"}&'
-        : '';
+      location.pathname == "/users" ? 'filter={"role":"seller"}&' : "";
 
-    setFetch(
-      `/api${location.pathname}?${userFilter}range=[${from},${to}]`
-    );
+    setFetch(`/api${location.pathname}?${userFilter}range=[${from},${to}]`);
   }, [location.search]);
 
   const componentGenerator = () =>
-    location.pathname.includes('users') ? UserCard : CategoryCard;
-  console.log(data);
+    location.pathname.includes("users") ? UserCard : CategoryCard;
   return (
     !status && (
       <Gallery

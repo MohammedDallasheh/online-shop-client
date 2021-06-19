@@ -1,10 +1,10 @@
 // in src/comments.js
-import React from 'react';
+import React from "react";
 
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
-import { makeStyles } from '@material-ui/core/styles';
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardHeader from "@material-ui/core/CardHeader";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   DateField,
   EditButton,
@@ -13,29 +13,29 @@ import {
   TextField,
   FunctionField,
   BooleanField,
-} from 'react-admin';
+} from "react-admin";
 
-import AvatarField from './AvatarField';
-import FullNameField from './FullNameField';
+import AvatarField from "./AvatarField";
+import FullNameField from "./FullNameField";
 
 const useStyles = makeStyles((theme) => ({
-  root: { margin: '1em' },
+  root: { margin: "1em" },
   card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    margin: '0.5rem 0',
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    margin: "0.5rem 0",
   },
   cardTitleContent: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   cardContent: {
     ...theme.typography.body1,
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
   },
 }));
 
@@ -46,7 +46,6 @@ const MobileGrid = ({ ids, data, basePath }) => {
   if (!ids || !data) {
     return null;
   }
-  console.log({ ids, data, basePath });
   return (
     <div className={classes.root}>
       {ids.map((id) => {

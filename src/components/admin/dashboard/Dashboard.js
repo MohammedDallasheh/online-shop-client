@@ -41,7 +41,6 @@ const Dashboard = () => {
       .reduce(
         (stats, order) => {
           if (order?.status?.statusType !== "Cancelled") {
-            // console.log(order, order.payment.amount);
             stats.revenue += order.payment.amount;
             stats.nbNewOrders++;
           }

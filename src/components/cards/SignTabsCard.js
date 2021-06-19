@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
 
-import { Tabs } from 'antd';
+import { Tabs } from "antd";
 
-import SignIn from './SignIn';
-import SignUp from './SignUp';
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
+import SignInRandom from "./SignInRandom";
 
 const { TabPane } = Tabs;
 
 const SignTabsCard = () => {
+  //inOrUp => signIn OR signUp
   const { inOrUp } = useParams();
   const history = useHistory();
-  const [activeKey, setActiveKey] = useState('in');
+  const [activeKey, setActiveKey] = useState("in");
 
   useEffect(() => {
-    console.log({ inOrUp });
-    if (['in', 'up'].includes(inOrUp)) setActiveKey(inOrUp);
+    if (["in", "up", "Random"].includes(inOrUp)) setActiveKey(inOrUp);
   }, [inOrUp]);
 
   const tabHandler = (key) => {
@@ -31,6 +32,9 @@ const SignTabsCard = () => {
       </TabPane>
       <TabPane tab="Sign Up" key="up">
         <SignUp />
+      </TabPane>
+      <TabPane tab="Random" key="Random">
+        <SignInRandom />
       </TabPane>
     </Tabs>
   );

@@ -1,16 +1,16 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { Collapse, Avatar, Tooltip, Popover, Empty } from 'antd';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import moment from 'moment';
-import { SettingOutlined } from '@ant-design/icons';
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { Collapse, Avatar, Tooltip, Popover, Empty } from "antd";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import moment from "moment";
+import { SettingOutlined } from "@ant-design/icons";
 
-import MessageSetting from './MessageSetting';
+import MessageSetting from "./MessageSetting";
 
-import { setUnread } from '../../../actions/user/index';
-import { useStyles } from './style';
-import { replayRedirectUrl, forwardRedirectUrl } from './function';
+import { setUnread } from "../../../actions/user/index";
+import { useStyles } from "./style";
+import { replayRedirectUrl, forwardRedirectUrl } from "./function";
 
 const { Panel } = Collapse;
 
@@ -32,16 +32,17 @@ const MyMessage = ({ message }) => {
   return (
     <div className="row">
       <div className="col-1 p-2">
-        <Avatar src={avatar?.url} alt={avatar?.alt} />
+        <Avatar
+          src={process.env.REACT_APP_API_SERVER + avatar?.url}
+          alt={avatar?.alt}
+        />
       </div>
       <div className="col-11 p-2">
         {/* <div className="d-flex flex-wrap"> */}
         <div className={classes.messageHeader}>
-          <span className="message-name">
-            {`${name?.first} ${name?.last}`}
-          </span>
+          <span className="message-name">{`${name?.first} ${name?.last}`}</span>
           <span className="message-time">
-            <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
+            <Tooltip title={moment().format("YYYY-MM-DD HH:mm:ss")}>
               <span>{moment(createdAt).fromNow()}</span>
             </Tooltip>
           </span>
@@ -87,19 +88,14 @@ const MyPanel = (props) => {
   const { unread, subject, from, createdAt, _id } = message;
   const panelSetting = {
     header: (
-      <MessageSetting message={message} trigger={['contextMenu']}>
-        <div
-          className={`row text-center ${unread && 'text-warning'}`}
-        >
+      <MessageSetting message={message} trigger={["contextMenu"]}>
+        <div className={`row text-center ${unread && "text-warning"}`}>
           <span className="col-12 col-sm-4">{subject}</span>
           <span className="col-12 col-sm-4">{from?.email}</span>
           <span className="col-12 col-sm-4">
-            {moment(createdAt).format('YYYY-MM-DD HH:mm')}
+            {moment(createdAt).format("YYYY-MM-DD HH:mm")}
           </span>
-          <div
-            className="position-absolute"
-            style={{ right: '1rem' }}
-          >
+          <div className="position-absolute" style={{ right: "1rem" }}>
             <MessageSetting message={message}>
               <SettingOutlined />
             </MessageSetting>
@@ -134,10 +130,7 @@ const MessagesList = ({ data: messages }) => {
         <Collapse accordion>
           {messages.map((message) => (
             <MyPanel message={message} key={message._id}>
-              <MessageSetting
-                message={message}
-                trigger={['contextMenu']}
-              >
+              <MessageSetting message={message} trigger={["contextMenu"]}>
                 <MyMessage message={message} />
               </MessageSetting>
             </MyPanel>

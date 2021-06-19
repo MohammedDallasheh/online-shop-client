@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import { useDispatch } from 'react-redux';
-import { Upload, Modal } from 'antd';
-import ImgCrop from 'antd-img-crop';
-import { PlusOutlined } from '@ant-design/icons';
+import { useDispatch } from "react-redux";
+import { Upload, Modal } from "antd";
+import ImgCrop from "antd-img-crop";
+import { PlusOutlined } from "@ant-design/icons";
 
-import { errorAlert } from '../../function/alert';
-import { uploadImage, deleteImage } from '../../actions/image';
+import { errorAlert } from "../../function/alert";
+import { uploadImage, deleteImage } from "../../actions/image";
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -30,29 +30,30 @@ const ImageUpload = ({
   const dispatch = useDispatch();
   const [addDispatch, deleteDispatch] = dispatchType;
 
-  const [fileList, setFileList] = useState(imgs);
+  const [fileList, setFileList] = useState([]);
   const [previewVisible, setPreviewVisible] = useState(false);
-  const [previewImage, setPreviewImage] = useState('');
-  const [previewTitle, setPreviewTitle] = useState('');
+  const [previewImage, setPreviewImage] = useState("");
+  const [previewTitle, setPreviewTitle] = useState("");
 
   useEffect(() => {
-    setFileList(imgs);
+    setFileList(
+      imgs.map((img) => ({
+        ...img,
+        url: process.env.REACT_APP_API_SERVER + img.url,
+      }))
+    );
   }, [imgs]);
 
   const handleAdd = ({ file }) => {
     addDispatch &&
-      dispatch(
-        uploadImage(file, resource, itemId, path, addDispatch)
-      );
+      dispatch(uploadImage(file, resource, itemId, path, addDispatch));
   };
   const handleRemove = ({ _id }) => {
-    dispatch(
-      deleteImage(_id, resource, itemId, path, deleteDispatch)
-    );
+    dispatch(deleteImage(_id, resource, itemId, path, deleteDispatch));
   };
   const handleChange = async ({ file, fileList }) => {
     setFileList([...fileList]);
-    file.status = 'done';
+    file.status = "done";
   };
 
   const handleCancel = () => setPreviewVisible(false);
@@ -64,12 +65,9 @@ const ImageUpload = ({
     setPreviewVisible(true);
     setPreviewImage(file.url || file.preview);
     setPreviewTitle(
-      file.name ||
-        file.alt ||
-        file.url.substring(file.url.lastIndexOf('/') + 1)
+      file.name || file.alt || file.url.substring(file.url.lastIndexOf("/") + 1)
     );
   };
-
   return (
     <>
       <ImgCrop rotate>
@@ -94,18 +92,10 @@ const ImageUpload = ({
       <Modal
         visible={previewVisible}
         title={previewTitle}
-        footer={
-          <div className="text-center">
-            <textarea />
-          </div>
-        }
         onCancel={handleCancel}
+        footer={false}
       >
-        <img
-          alt="example"
-          style={{ width: '100%' }}
-          src={previewImage}
-        />
+        <img alt="example" style={{ width: "100%" }} src={previewImage} />
       </Modal>
     </>
   );

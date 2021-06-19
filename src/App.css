@@ -52,6 +52,11 @@ input[type="number"] {
   /* transform: scale(2.5, 2.5); */
 }
 
+.ant-modal.landingModal {
+  max-width: unset;
+  width: unset !important;
+}
+
 .ant-image-preview-body {
   top: 15% !important;
   left: 15% !important;

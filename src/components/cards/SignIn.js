@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 
-import { Form, Input, Button, Checkbox } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { Form, Input, Button, Checkbox } from "antd";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
-import Icon from '../layout/Icon';
-import { login } from '../../actions/auth';
+import Icon from "../layout/Icon";
+import { login } from "../../actions/auth";
 
 const inputData = {
   email: {
     rules: [
       {
-        type: 'email',
-        message: 'The input is not valid E-mail!',
+        type: "email",
+        message: "The input is not valid E-mail!",
       },
       {
         required: true,
-        message: 'Please input your E-mail!',
+        message: "Please input your E-mail!",
       },
     ],
     prefix: <UserOutlined />,
@@ -26,7 +26,7 @@ const inputData = {
     role: [
       {
         required: true,
-        message: 'Please input your Password!',
+        message: "Please input your Password!",
       },
     ],
     prefix: <LockOutlined />,
@@ -89,19 +89,15 @@ const SignIn = ({ setActiveKey }) => {
                 type="primary"
                 htmlType="submit"
                 disabled={
-                  !form.isFieldsTouched(
-                    ['email', 'password'],
-                    true
-                  ) ||
-                  !!form
-                    .getFieldsError()
-                    .filter(({ errors }) => errors.length).length
+                  !form.isFieldsTouched(["email", "password"], true) ||
+                  !!form.getFieldsError().filter(({ errors }) => errors.length)
+                    .length
                 }
               >
                 Sign In
               </Button>
               Or
-              <Button type="link" onClick={() => setActiveKey('up')}>
+              <Button type="link" onClick={() => setActiveKey("up")}>
                 register now!
               </Button>
             </>
@@ -109,9 +105,7 @@ const SignIn = ({ setActiveKey }) => {
         </Form.Item>
       </Form>
       <div className="d-flex px-5 justify-content-around">
-        <a
-          href={`${process.env.REACT_APP_BACKEND_URL}/api/auth/facebook`}
-        >
+        <a href={`${process.env.REACT_APP_API_SERVER}/api/auth/facebook`}>
           <Icon name="test70" size={2} />
         </a>
         <Icon name="test77" size={2} />

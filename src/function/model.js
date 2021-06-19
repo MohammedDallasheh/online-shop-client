@@ -2,7 +2,9 @@ import { Modal } from "antd";
 
 const landingModal = () =>
   Modal.info({
-    width: "50vw",
+    width: `${
+      window.innerWidth < 768 ? 100 : window.innerWidth < 992 ? 75 : 50
+    }vw`,
     closable: true,
     maskClosable: true,
     title: "E-commerce Project",

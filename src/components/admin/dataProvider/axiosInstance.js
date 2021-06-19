@@ -1,6 +1,16 @@
 import axios from "axios";
 import { alert, errorAlert } from "../../../function/alert";
-const apiUrl = "http://localhost:5000/api";
+// const apiUrl = "http://localhost:5000/api";
+let apiUrl = "";
+
+if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+  // development URL
+  apiUrl = `${process.env.REACT_APP_API_SERVER_DEVELOPMENT}/api`;
+} else {
+  // production URL
+  apiUrl = `${process.env.REACT_APP_API_SERVER_PRODUCTION}/api`;
+}
+
 const defaultConfig = {
   baseURL: apiUrl,
   headers: { "Admin-Dashboard": "true" },

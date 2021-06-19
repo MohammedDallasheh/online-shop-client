@@ -1,19 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import {
-  Form,
-  Input,
-  Tooltip,
-  Select,
-  Checkbox,
-  Button,
-  Row,
-  Col,
-} from 'antd';
-import { useHistory, useLocation } from 'react-router-dom';
-import { parse } from 'query-string';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { register } from '../../actions/auth';
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Form, Input, Tooltip, Select, Checkbox, Button, Row, Col } from "antd";
+import { useHistory, useLocation } from "react-router-dom";
+import { parse } from "query-string";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { register } from "../../actions/auth";
 
 const tailFormItemLayout = {
   wrapperCol: { span: 12, offset: 6 },
@@ -37,7 +28,6 @@ const SignUp = ({}) => {
   const dispatch = useDispatch();
 
   const { fName, lName, email, avatar } = parse(search);
-  console.log(avatar);
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
@@ -61,7 +51,7 @@ const SignUp = ({}) => {
             rules={[
               {
                 required: true,
-                message: 'Please input your first name!',
+                message: "Please input your first name!",
                 whitespace: true,
               },
             ]}
@@ -77,7 +67,7 @@ const SignUp = ({}) => {
             rules={[
               {
                 required: true,
-                message: 'Please input your last name!',
+                message: "Please input your last name!",
                 whitespace: true,
               },
             ]}
@@ -93,7 +83,7 @@ const SignUp = ({}) => {
             rules={[
               {
                 required: true,
-                message: 'Please input your address!',
+                message: "Please input your address!",
                 whitespace: true,
               },
             ]}
@@ -112,21 +102,19 @@ const SignUp = ({}) => {
             name="email"
             rules={[
               {
-                type: 'email',
-                message: 'The input is not valid E-mail!',
+                type: "email",
+                message: "The input is not valid E-mail!",
               },
               {
                 required: true,
-                message: 'Please input your E-mail!',
+                message: "Please input your E-mail!",
               },
             ]}
           >
             <Input
               autoComplete="off"
               placeholder="E-mail"
-              prefix={
-                <UserOutlined className="site-form-item-icon" />
-              }
+              prefix={<UserOutlined className="site-form-item-icon" />}
             />
           </Form.Item>
 
@@ -135,7 +123,7 @@ const SignUp = ({}) => {
             rules={[
               {
                 required: true,
-                message: 'Please input your password!',
+                message: "Please input your password!",
               },
             ]}
             hasFeedback
@@ -143,28 +131,26 @@ const SignUp = ({}) => {
             <Input.Password
               autoComplete="off"
               placeholder="Password"
-              prefix={
-                <LockOutlined className="site-form-item-icon" />
-              }
+              prefix={<LockOutlined className="site-form-item-icon" />}
             />
           </Form.Item>
 
           <Form.Item
             name="confirm"
-            dependencies={['password']}
+            dependencies={["password"]}
             hasFeedback
             rules={[
               {
                 required: true,
-                message: 'Please confirm your password!',
+                message: "Please confirm your password!",
               },
               ({ getFieldValue }) => ({
                 validator(_, value) {
-                  if (!value || getFieldValue('password') === value) {
+                  if (!value || getFieldValue("password") === value) {
                     return Promise.resolve();
                   }
 
-                  return Promise.reject('passwords do not match!');
+                  return Promise.reject("passwords do not match!");
                 },
               }),
             ]}
@@ -172,9 +158,7 @@ const SignUp = ({}) => {
             <Input.Password
               autoComplete="off"
               placeholder="Confirm Password"
-              prefix={
-                <LockOutlined className="site-form-item-icon" />
-              }
+              prefix={<LockOutlined className="site-form-item-icon" />}
             />
           </Form.Item>
         </Col>
@@ -188,7 +172,7 @@ const SignUp = ({}) => {
             validator: (_, value) =>
               value
                 ? Promise.resolve()
-                : Promise.reject('Should accept agreement'),
+                : Promise.reject("Should accept agreement"),
           },
         ]}
       >
