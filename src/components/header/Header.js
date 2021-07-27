@@ -85,9 +85,10 @@ const Header = () => {
         className="col-lg-6  mt-2 mx-auto border-bottom-0 d-none d-md-block"
       >
         <NavSearch
-          onSelect={(_, { _id, value }) => {
-            if (_id) history.push(`/product/${_id}`);
-            else history.push(`/products?q=${value}`);
+          onSelect={(_, { value, label }) => {
+            console.log({ value, label });
+            if (value != "currentSearch") history.push(`/product/${value}`);
+            else history.push(`/products?q=${label}`);
           }}
         />
       </Menu.Item>

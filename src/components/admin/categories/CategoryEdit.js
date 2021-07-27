@@ -26,16 +26,6 @@ import {
 import CategoryImgCard from "./CategoryImgCard";
 import { makeStyles } from "@material-ui/core/styles";
 
-const CategoryTitle = ({ record }) => {
-  const translate = useTranslate();
-  return record ? (
-    <span>
-      {translate("resources.categories.name", { smart_count: 1 })} &quot;
-      {record.name}&quot;
-    </span>
-  ) : null;
-};
-
 const useStyles = makeStyles({
   comment: {
     maxWidth: "20em",
@@ -79,6 +69,7 @@ const CategoryEdit = (props) => {
             target="category"
             label="resources.categories.fields.products"
             perPage={20}
+            pagination={<Pagination />}
             fullWidth
           >
             <Datagrid>

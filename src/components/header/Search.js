@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { AutoComplete } from 'antd';
-import { useFetch } from '../../function/useFetch';
+import React, { useState, useEffect, useRef } from "react";
+import { AutoComplete } from "antd";
+import { useFetch } from "../../function/useFetch";
 
 const Search = ({
-  resource = 'product',
+  resource = "product",
   onSelect,
-  select = 'title',
+  select = "title",
   valueParse,
   addCurrentSearch = true,
   ...rest
@@ -14,44 +14,42 @@ const Search = ({
     defaultData: { docs: [] },
     dataMap: (data) =>
       data.docs.map((doc) => ({
-        value: valueParse?.(doc) || doc[select],
-        _id: doc._id,
+        label: valueParse?.(doc) || doc[select],
+        value: doc._id,
       })),
   });
 
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
   const [options, setOptions] = useState([]);
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
   const [open, setOpen] = useState();
   const ref = useRef();
 
   useEffect(() => {
-    setValue('');
+    setValue("");
     setOptions([]);
-    setSearchText('');
+    setSearchText("");
     // onSearch('');
   }, [resource]);
 
   useEffect(() => {
-    if (addCurrentSearch)
-      setOptions([{ value: searchText }, ...data]);
+    if (addCurrentSearch && searchText)
+      setOptions([{ label: searchText, value: "currentSearch" }, ...data]);
     else setOptions(data);
   }, [data]);
 
   const onSearch = (text) => {
-    setUrl(
-      `/api/constants/auto-complate/${resource}?filter={"q":"${text}"}`
-    );
+    setUrl(`/api/constants/auto-complate/${resource}?filter={"q":"${text}"}`);
     addCurrentSearch && setSearchText(text);
   };
 
   const internalOnSelect = (data, options) => {
-    setValue('');
-    setSearchText('');
+    setValue("");
+    setSearchText("");
 
     if (onSelect) onSelect(data, options);
     setOpen(false);
-    onSearch('');
+    onSearch("");
     ref.current.blur();
   };
   const onChange = (data) => {
@@ -67,7 +65,7 @@ const Search = ({
         onChange={onChange}
         open={open}
         onFocus={() => {
-          onSearch('');
+          onSearch("");
           setOpen(true);
         }}
         onBlur={() => setOpen(false)}

@@ -13,12 +13,14 @@ export const tabs = tabsNames.map((tab) => ({
   name: tab,
 }));
 
-const objectFilter = (properties) => (obj) =>
+const objectFilter = (properties) => (obj, index) =>
   properties?.length
     ? properties.reduce((newObj, property) => {
         if (typeof property === "string") newObj[property] = obj[property];
         if (typeof property === "object")
           newObj[property?.name] = property.parse(obj);
+        newObj.index = index;
+        newObj.order = index;
         return newObj;
       }, {})
     : obj;
@@ -70,7 +72,7 @@ const TabbedDatagrid = () => {
   const [selectedTab, setSelectedTab] = useState("homepageCarousel");
   const [data, setData] = useState([]);
   const [columns, setColumns] = useState([]);
-
+  const [dragedIndex, setDragedIndex] = useState();
   const [resource, setResource] = useState("product");
 
   useEffect(() => {
@@ -113,8 +115,32 @@ const TabbedDatagrid = () => {
     setResource(tabToResource(value));
   };
   const onSearchSelect = async (data, options) => {
-    await dataProvider.create(`display/${selectedTab}/${options._id}`, {});
+    await dataProvider.create(`display/${selectedTab}/${options.value}`, {});
     fetchData();
+  };
+  const onReorder = async () => {
+    await dataProvider.update(`display/${selectedTab}`, {
+      id: "reorder",
+      data: { order: data.map(({ order }) => order) },
+    });
+    fetchData();
+  };
+  const onDragStart = (index) => {
+    setDragedIndex(index);
+  };
+  const dragSwap = (index) => {
+    if (index === dragedIndex) return;
+    const newData = [...data];
+    newData[index] = data[dragedIndex];
+    newData[dragedIndex] = data[index];
+    newData.forEach((row, i) => (row.index = i));
+    setDragedIndex(index);
+    setData(newData);
+  };
+  const onDragEnd = () => {
+    console.log("onDragEnd");
+    setDragedIndex();
+    onReorder();
   };
   return (
     <Fragment>
@@ -144,17 +170,41 @@ const TabbedDatagrid = () => {
       </div>
       <Table
         columns={columns}
-        rowKey={() => uuidv4()}
-        // rowKey="uid"
-        // rowKey={(record) => {
-        //   console.log({ record });
-        //   // return `${record.id}-${resource}`;
-        //   return uuidv4();
-        // }}
+        rowKey={(record) => record.index}
         dataSource={data}
         pagination={{ position: ["none", "none"] }}
+        components={{
+          body: {
+            wrapper: (props) => <TabelWrapper onDrop={onDragEnd} {...props} />,
+            row: (props) => (
+              <TabelRow
+                dragSwap={dragSwap}
+                onDragStart={onDragStart}
+                onDragEnd={onDragEnd}
+                {...props}
+              />
+            ),
+          },
+        }}
       />
     </Fragment>
+  );
+};
+
+const TabelWrapper = ({ onDrop, ...props }) => {
+  return <tbody onDragOver={(e) => e.preventDefault()} {...props} />;
+};
+
+const TabelRow = ({ dragSwap, onDragStart, onDragEnd, ...props }) => {
+  return (
+    <tr
+      {...props}
+      onDragStart={() => onDragStart(props["data-row-key"])}
+      onDragEnter={() => dragSwap(props["data-row-key"])}
+      onDrop={onDragEnd}
+      style={{ cursor: "grab" }}
+      draggable
+    />
   );
 };
 

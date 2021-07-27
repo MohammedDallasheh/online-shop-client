@@ -1,5 +1,6 @@
 {
   "name": "online-shop-client2",
+  "homepage": "https://md-online-shop.netlify.app/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

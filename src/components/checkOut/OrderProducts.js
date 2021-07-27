@@ -1,20 +1,19 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-import Quantity from '../cart/Quantity';
+import Quantity from "../cart/Quantity";
 
 const OrderProducts = ({ cart = [], totalPrice }) => {
   const quantityError = (stock, quantity) => {
-    if (!stock)
-      return <b className="text-warning mr-3"> OUT OF STOCK</b>;
+    if (!stock) return <b className="text-warning mr-3"> OUT OF STOCK</b>;
 
     if (!!stock && quantity > stock)
       return <b className="text-warning mr-3">MAX QTY {stock}</b>;
   };
 
-  return !cart.length ? (
-    <div></div>
-  ) : (
+  if (!cart.length) return null;
+
+  return (
     <>
       <h4 className="text-center mb-3">
         <span className="text-primary mx-2">Your cart</span>
@@ -33,9 +32,7 @@ const OrderProducts = ({ cart = [], totalPrice }) => {
             >
               <div>
                 <h6 className="my-0">
-                  <Link to={`/product/${_id}`}>
-                    {title.slice(0, 100)}
-                  </Link>
+                  <Link to={`/product/${_id}`}>{title.slice(0, 100)}</Link>
                   {quantityError(stock, quantity)}
 
                   <Quantity
@@ -48,10 +45,8 @@ const OrderProducts = ({ cart = [], totalPrice }) => {
                 <small className="text-muted">{description}</small>
               </div>
               <span className="text-muted d-block w-100">
-                {quantity.fix()} X {(offer || price).fix()}$ ={' '}
-                <strong>
-                  {(quantity * (offer || price)).fix()}$
-                </strong>
+                {quantity.fix()} X {(offer || price).fix()}$ ={" "}
+                <strong>{(quantity * (offer || price)).fix()}$</strong>
               </span>
             </li>
           );

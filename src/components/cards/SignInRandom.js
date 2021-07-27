@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 
 import { useDispatch } from "react-redux";
 import { Button } from "antd";
@@ -26,18 +26,17 @@ const SignInRandom = () => {
   };
 
   const btnGenerator = (title) => (
-    <>
+    <Fragment key={title}>
       <Button
         type="primary"
         className="w-75 my-1 "
         name={title}
-        key={title}
         onClick={() => onSelectUserType(title)}
       >
         {title} User
       </Button>
       <br />
-    </>
+    </Fragment>
   );
   return (
     <div className="w-100 text-center">

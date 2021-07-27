@@ -1,15 +1,11 @@
-import React from 'react';
+import React from "react";
 
-import { Card as MuiCard, CardContent } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOnOutlined';
+import { Card as MuiCard, CardContent } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
+import MonetizationOnIcon from "@material-ui/icons/MonetizationOnOutlined";
 
-import {
-  FilterList,
-  FilterListItem,
-  FilterLiveSearch,
-} from 'react-admin';
+import { FilterList, FilterListItem, FilterLiveSearch } from "react-admin";
 import {
   endOfYesterday,
   startOfWeek,
@@ -18,17 +14,17 @@ import {
   startOfMonth,
   subMonths,
   subYears,
-} from 'date-fns';
+} from "date-fns";
 
 const Card = withStyles((theme) => ({
   root: {
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up("sm")]: {
       order: -1,
-      width: '15em',
-      marginRight: '1em',
+      width: "15em",
+      marginRight: "1em",
     },
-    [theme.breakpoints.down('sm')]: {
-      display: 'none',
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
     },
   },
 }))(MuiCard);
@@ -47,7 +43,6 @@ const Aside = () => (
           value={{
             registered: {
               $gte: endOfYesterday().toISOString(),
-              $lte: undefined,
             },
           }}
         />
@@ -56,7 +51,6 @@ const Aside = () => (
           value={{
             registered: {
               $gte: startOfWeek(new Date()).toISOString(),
-              $lte: undefined,
             },
           }}
         />
@@ -64,10 +58,7 @@ const Aside = () => (
           label="resources.customers.filters.last_week"
           value={{
             registered: {
-              $gte: subWeeks(
-                startOfWeek(new Date()),
-                1
-              ).toISOString(),
+              $gte: subWeeks(startOfWeek(new Date()), 1).toISOString(),
               $lte: startOfWeek(new Date()).toISOString(),
             },
           }}
@@ -77,7 +68,6 @@ const Aside = () => (
           value={{
             registered: {
               $gte: startOfMonth(new Date()).toISOString(),
-              $lte: undefined,
             },
           }}
         />
@@ -85,10 +75,7 @@ const Aside = () => (
           label="resources.customers.filters.last_month"
           value={{
             registered: {
-              $gte: subMonths(
-                startOfMonth(new Date()),
-                1
-              ).toISOString(),
+              $gte: subMonths(startOfMonth(new Date()), 1).toISOString(),
               $lte: startOfMonth(new Date()).toISOString(),
             },
           }}
@@ -97,10 +84,7 @@ const Aside = () => (
           label="resources.customers.filters.last_year"
           value={{
             registered: {
-              $gte: subYears(
-                startOfYear(new Date()),
-                1
-              ).toISOString(),
+              $gte: subYears(startOfYear(new Date()), 1).toISOString(),
               $lte: startOfYear(new Date()).toISOString(),
             },
           }}
@@ -113,29 +97,23 @@ const Aside = () => (
       >
         <FilterListItem
           label="resources.customers.filters.admin"
-          value={{ role: 'admin' }}
+          value={{ role: "admin" }}
         />
         <FilterListItem
           label="resources.customers.filters.seller"
-          value={{ role: 'seller' }}
+          value={{ role: "seller" }}
         />
         <FilterListItem
           label="resources.customers.filters.customer"
-          value={{ role: 'subscriber' }}
+          value={{ role: "subscriber" }}
         />
       </FilterList>
       <FilterList
         label="resources.customers.filters.active"
         icon={<MonetizationOnIcon />}
       >
-        <FilterListItem
-          label="ra.boolean.true"
-          value={{ isActive: true }}
-        />
-        <FilterListItem
-          label="ra.boolean.false"
-          value={{ isActive: false }}
-        />
+        <FilterListItem label="ra.boolean.true" value={{ isActive: true }} />
+        <FilterListItem label="ra.boolean.false" value={{ isActive: false }} />
       </FilterList>
       <FilterList
         label="resources.customers.filters.lock"
@@ -145,10 +123,7 @@ const Aside = () => (
           label="ra.boolean.true"
           value={{ isLock: { $ne: false } }}
         />
-        <FilterListItem
-          label="ra.boolean.false"
-          value={{ isLock: false }}
-        />
+        <FilterListItem label="ra.boolean.false" value={{ isLock: false }} />
       </FilterList>
     </CardContent>
   </Card>

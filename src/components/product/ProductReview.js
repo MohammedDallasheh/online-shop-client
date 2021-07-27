@@ -18,15 +18,26 @@ const { Element, scroller } = Scroll;
 
 const CommentFeild = (props) => {
   const dispatch = useDispatch();
-  const { author, avatar, order, hasDeletePermission } = props;
-  const { productId, commentId, commentText, datetime } = props;
+  const { author, avatar, userId, userEmail } = props;
+  const { productId, productTitle, order, hasDeletePermission } = props;
+  const { commentId, commentText, datetime } = props;
   const defaultAvatar =
     "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png";
   return (
     <Comment
       datetime={datetime}
       author={author}
-      avatar={process.env.REACT_APP_API_SERVER + avatar?.url || defaultAvatar}
+      avatar={
+        <Link
+          to={`/user/message/new?to=${userId}&email=${userEmail}&type=general&subject=Replay%20to%20comment%20in:%20${productTitle}`}
+        >
+          <Avatar
+            src={
+              process.env.REACT_APP_API_SERVER + avatar?.url || defaultAvatar
+            }
+          />
+        </Link>
+      }
       content={
         <div key={commentId}>
           {typeof order?.rate == "number" && (
@@ -98,11 +109,14 @@ const ProductReview = ({ product, user }) => {
   useEffect(() => {
     const comment = product?.reviews?.map(
       ({ _id, name, createdAt, text, user }) => ({
+        userId: user?._id,
+        userEmail: user?.email,
         author: user?.name?.first + " " + user?.name?.last,
         avatar: user?.avatar,
         order: userOrder(user?._id),
         hasDeletePermission: hasDeletePermission(user?._id),
         productId: product._id,
+        productTitle: product?.title,
         commentId: _id,
         commentText: text,
         datetime: moment(createdAt?.slice(0, 16)).fromNow(),

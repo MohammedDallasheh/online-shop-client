@@ -23,9 +23,25 @@ const UserCard = ({ items = {} }) => {
           <h5 className="card-title">
             {name?.first} {name?.last}
           </h5>
-          <p className="card-text">{description?.slice(0, 150)} </p>
+          <p
+            className="card-text"
+            style={{
+              height: "7rem",
+              overflow: "hidden",
+            }}
+          >
+            {description?.slice(0, 150)}{" "}
+          </p>
         </div>
-        <div className="card-footer  text-center">
+        <div
+          className="card-footer  text-center"
+          style={{
+            height: "5rem",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: " nowrap",
+          }}
+        >
           <small className="text-muted ">{email}</small>
         </div>
       </div>

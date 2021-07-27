@@ -37,8 +37,8 @@ const NewMessage = () => {
       setMessageType(type);
   }, [search]);
 
-  const handleSearch = (data, { value, _id }) => {
-    setTags({ ...tags, [value]: _id });
+  const handleSearch = (data, { value, label }) => {
+    setTags({ ...tags, [label]: value });
   };
 
   const handleTagClose = (e, key) => {

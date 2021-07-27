@@ -1,11 +1,11 @@
-import * as React from 'react';
-import { FC } from 'react';
-import inflection from 'inflection';
-import { Card, CardContent } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import LocalOfferIcon from '@material-ui/icons/LocalOfferOutlined';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import * as React from "react";
+import { FC } from "react";
+import inflection from "inflection";
+import { Card, CardContent } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import LocalOfferIcon from "@material-ui/icons/LocalOfferOutlined";
+import BarChartIcon from "@material-ui/icons/BarChart";
+import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import {
   FilterList,
   FilterListItem,
@@ -13,18 +13,18 @@ import {
   useGetList,
   useGetIdentity,
   useAuthProvider,
-} from 'react-admin';
-import { useSelector } from 'react-redux';
+} from "react-admin";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    [theme.breakpoints.up('sm')]: {
-      width: '15em',
-      marginRight: '1em',
-      overflow: 'initial',
+    [theme.breakpoints.up("sm")]: {
+      width: "15em",
+      marginRight: "1em",
+      overflow: "initial",
     },
-    [theme.breakpoints.down('sm')]: {
-      display: 'none',
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
     },
   },
 }));
@@ -32,9 +32,9 @@ const useStyles = makeStyles((theme) => ({
 const Aside = () => {
   // const { identity } = useGetIdentity();
   const { data, ids, ...rest } = useGetList(
-    'categories',
+    "categories",
     { page: 1, perPage: 100 },
-    { field: 'updatedAt', order: 'ASC' },
+    { field: "updatedAt", order: "ASC" },
     {}
   );
   const classes = useStyles();
@@ -60,8 +60,7 @@ const Aside = () => {
             label="resources.products.filters.best_sellers"
             value={{
               sold: {
-                $lte: undefined,
-                $gte: 25,
+                $gte: 400,
               },
             }}
           />
@@ -103,8 +102,8 @@ const Aside = () => {
             label="resources.products.filters.low_stock"
             value={{
               stock: {
-                $lte: 10,
-                $gte: 0,
+                $lte: 9,
+                $gte: 1,
               },
             }}
           />
@@ -121,7 +120,6 @@ const Aside = () => {
             label="resources.products.filters.enough_stock"
             value={{
               stock: {
-                $lte: undefined,
                 $gte: 49,
               },
             }}

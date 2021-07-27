@@ -6,13 +6,8 @@ import {
   List,
   ListContextProvider,
   NumberField,
-  ReferenceField,
   TextField,
   useListContext,
-  useDataProvider,
-  useGetOne,
-  useGetList,
-  useNotify,
   useQuery,
 } from "react-admin";
 import { useSelector } from "react-redux";
@@ -22,12 +17,12 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import NbItemsField from "./NbItemsField";
 import CustomerReferenceField from "../visitors/CustomerReferenceField";
-import AddressField from "../visitors/AddressField";
 import MobileGrid from "./MobileGrid";
 import OrderFilter from "./OrderFilter";
-import axios from "axios";
+import PrivateComponent from "../layout/PrivateComponent";
 
 const useDatagridStyles = makeStyles({
+  tabs: { flexGrow: 1, width: "100%" },
   total: { fontWeight: "bold" },
 });
 
@@ -52,7 +47,6 @@ const useGetTotals = (enabled) => {
   });
   if (data)
     statusTypes.forEach((status) => {
-      // console.log(data, status);
       if (!data[status]) data[status] = "0";
     });
   return { ...data };
@@ -65,14 +59,9 @@ const TabbedDatagrid = (props) => {
   const { ids, filterValues, setFilters, displayedFilters } = listContext;
 
   const classes = useDatagridStyles();
-  const dataProvider = useDataProvider();
   const isXSmall = useMediaQuery((theme) => theme.breakpoints.down("xs"));
 
-  // const [totals, setTotals] = useState({});
-  // useGetTotals().then((data) => setTotals(data));
   const totals = useGetTotals();
-
-  // console.log(`totals`, totals);
 
   const [idsState, setIdsState] = useState({
     selected: "",
@@ -81,14 +70,7 @@ const TabbedDatagrid = (props) => {
   useEffect(() => {
     if (ids && ids !== filterValues.status) {
       setIdsHandler(ids);
-      // console.log(`useEffect`);
     }
-    // return () => {
-    //   ids.length = 0;
-    //   setIdsState({
-    //     selected: '',
-    //   });
-    // };
   }, [ids, filterValues.status]);
 
   function setIdsHandler(ids) {
@@ -110,7 +92,6 @@ const TabbedDatagrid = (props) => {
     },
     [displayedFilters, filterValues, setFilters, ids.selected]
   );
-  // console.log(`ids`, ids);
   return (
     <Fragment>
       <Tabs
@@ -143,7 +124,6 @@ const TabbedDatagrid = (props) => {
             <Datagrid {...props} rowClick={role !== "subscriber" ? "edit" : ""}>
               <DateField source="createdAt" showTime />
               <DateField source="updatedAt" showTime />
-              {/* <TextField source="reference" /> */}
               <CustomerReferenceField
                 source="buyerId"
                 link={role === "admin"}
@@ -152,14 +132,7 @@ const TabbedDatagrid = (props) => {
                 source="sellerId"
                 link={role === "admin"}
               />
-              {/* <ReferenceField
-                source="buyerId"
-                reference="customers"
-                link={false}
-                label="resources.orders.fields.address"
-              >
-                <AddressField />
-              </ReferenceField> */}
+
               <TextField
                 source="address"
                 label="resources.orders.fields.address"

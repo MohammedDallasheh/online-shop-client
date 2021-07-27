@@ -6,7 +6,7 @@ import { FieldProps } from "react-admin";
 const AvatarField = ({ record, size = "25", className }) =>
   record ? (
     <Avatar
-      src={`${process.env.REACT_APP_API_SERVER + record.avatar.url}`}
+      src={`${process.env.REACT_APP_API_SERVER + record?.avatar?.url}`}
       style={{
         width: parseInt(size, 10),
         height: parseInt(size, 10),
